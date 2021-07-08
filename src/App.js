@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
-import { Alert } from 'react-bootstrap';
+import { Alert } from '@material-ui/lab'
 import Container from '@material-ui/core/Container';
 
 import Home from './components/Home';
@@ -54,7 +54,7 @@ const App = () => {
 
       <Navigation user={user} />
 
-      {(message && <Alert variant="success">{message}</Alert>)}
+      {(message && <Alert severity="success">{message}</Alert>)}
 
       <Switch>
         <Route path="/notes/:id">
