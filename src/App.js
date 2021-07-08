@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-
 import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
-
 import { Alert } from 'react-bootstrap';
+import Container from '@material-ui/core/Container';
 
 import Home from './components/Home';
 import Navigation from './components/Navigation';
@@ -51,7 +50,7 @@ const App = () => {
     : null
 
   return (
-    <div className="container">
+    <Container>
 
       <Navigation user={user} />
 
@@ -76,7 +75,7 @@ const App = () => {
       </Switch>
 
       <Footer />
-    </div>
+    </Container>
   );
 };
 
