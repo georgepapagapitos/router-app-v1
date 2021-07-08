@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Button, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
 
 const Navigation = ({ user }) => {
   return (
