@@ -1,79 +1,16 @@
 import React, { useState } from 'react';
 
-import {
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useRouteMatch
-} from "react-router-dom";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 
-const Home = () => (
-  <div>
-    <h2>Notes app</h2>
-    <p>Subtext about notes.</p>
-  </div>
-);
+import { Alert } from 'react-bootstrap';
 
-const Note = ({ note }) => {
-  return (
-    <div>
-      <h2>{note.content}</h2>
-      <div>Posted by {note.user}</div>
-      <div><strong>{note.important ? 'important' : ''}</strong></div>
-    </div>
-  );
-};
-
-const Notes = ({ notes }) => (
-  <div>
-    <h2>Notes</h2>
-    <ul>
-      {notes.map(note =>
-        <li key={note.id}>
-          <Link to={`/notes/${note.id}`}>{note.content}</Link>
-        </li>
-      )}
-    </ul>
-  </div>
-);
-
-const Users = () => (
-  <div>
-    <h2>Notes app users</h2>
-    <ul>
-      <li>George Papagapitos</li>
-      <li>Ruby Rubertson</li>
-      <li>Mia Karmicus</li>
-    </ul>
-  </div>
-);
-
-const Login = (props) => {
-  const history = useHistory();
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    props.onLogin('gpapagapitos');
-    history.push('/');
-  };
-
-  return (
-    <div>
-      <h2>login</h2>
-      <form onSubmit={onSubmit}>
-        <div>
-          username: <input />
-        </div>
-        <div>
-          password: <input type='password' />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
-  );
-};
+import Home from './components/Home';
+import Navigation from './components/Navigation';
+import Note from './components/Note';
+import Notes from './components/Notes';
+import Users from './components/Users';
+import Login from './components/Login';
+import Footer from './components/Footer';
 
 const App = () => {
   const [notes, setNotes] = useState([
@@ -98,13 +35,14 @@ const App = () => {
   ]);
 
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const login = (user) => {
     setUser(user);
-  };
-
-  const padding = {
-    padding: 5
+    setMessage(`welcome ${user}`);
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
   };
 
   const match = useRouteMatch('/notes/:id');
@@ -113,17 +51,11 @@ const App = () => {
     : null
 
   return (
-    <div>
+    <div className="container">
 
-      <div>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
-        <Link style={padding} to="/users">users</Link>
-        {user
-          ? <em>{user} logged in</em>
-          : <Link style={padding} to="/login">login</Link>
-        }
-      </div>
+      <Navigation user={user} />
+
+      {(message && <Alert variant="success">{message}</Alert>)}
 
       <Switch>
         <Route path="/notes/:id">
@@ -143,11 +75,7 @@ const App = () => {
         </Route>
       </Switch>
 
-      <div>
-        <br />
-        <em>Note app, A Human Company 2021</em>
-      </div>
-
+      <Footer />
     </div>
   );
 };
